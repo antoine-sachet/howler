@@ -75,7 +75,7 @@ var Howler = function(el) {
       if (track.includes('base64,')) {
         return null;
       } else {
-        var file_type = track.split('.').pop();
+        var file_type = track.split('.').pop().split('?', 1)[0];
         return file_type === 'mp4' ? 'dolby' : file_type;
       }
     } else {
