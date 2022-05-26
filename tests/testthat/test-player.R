@@ -16,6 +16,16 @@ testthat::test_that("howlerPlayer passes with multiple files", {
   testthat::expect_error(howlerPlayer("test", rep("test.mp3", 3)), NA)
 })
 
+testthat::test_that("howlerPlayer passes with 1 named file", {
+  testthat::expect_error(howlerPlayer("test", c("title1" = "test.mp3")), NA)
+})
+
+testthat::test_that("howlerPlayer passes with multiple files", {
+  tracks <- rep("test.mp3", 3)
+  names(tracks) <- c("A", "B", "C")
+  testthat::expect_error(howlerPlayer("test", tracks), NA)
+})
+
 testthat::test_that("howlerPlayer creates 'div' shiny.tag", {
   player <- howlerPlayer("test", "test.mp3")
 
@@ -24,11 +34,20 @@ testthat::test_that("howlerPlayer creates 'div' shiny.tag", {
   testthat::expect_match(player$attribs$class, "howler-player")
 })
 
-testthat::test_that("howlerPlayer contains track names", {
+testthat::test_that("howlerPlayer contains track files and titles (when unnamed)", {
   player <- howlerPlayer("test", "test.mp3")
   attributes <- paste0("data-", c("autoplay-next-track", "autoloop", "volume", "seek-rate"))
 
   testthat::expect_match(player$attribs$`data-audio-files`, "test.mp3")
+  testthat::expect_match(player$attribs$`data-track-titles`, "test")
+})
+
+testthat::test_that("howlerPlayer contains track files and titles (when named)", {
+  player <- howlerPlayer("test", c("title" = "test.mp3"))
+  attributes <- paste0("data-", c("autoplay-next-track", "autoloop", "volume", "seek-rate"))
+
+  testthat::expect_match(player$attribs$`data-audio-files`, "test.mp3")
+  testthat::expect_match(player$attribs$`data-track-titles`, "title")
 })
 
 testthat::test_that("howlerPlayer contains autoplay, autoloop, volume and seek rate attributes", {

@@ -8,7 +8,8 @@
 #'
 #' @param id HTML id tag to be given to the howler player element
 #' @param files Files that will be used in the player. This can either be a single vector, or a list where different
-#' formats of the same file are kept in each element of the list
+#' formats of the same file are kept in each element of the list. If named, the names are used as track titles. Otherwise,
+#' the track titles will be derived from the filenames.
 #' @param volume How loud the player should start off at. Defaults to 0.7 (70\%). If \code{\link{howlerVolumeSlider}} is
 #' included, then this will be overridden by the value used there.
 #' @param autoplay_next If there are multiple files, would you like to auto play the next file after the current
@@ -67,7 +68,20 @@
 #'
 #' @export
 howlerPlayer <- function(id, files, volume = 0.7, autoplay_next = TRUE, autoplay_loop = FALSE, seek_ping_rate = 1000) {
-  files_jsn <- jsonlite::toJSON(files)
+
+  # Extract titles if provided or create them otherwise
+  titles <- if (!is.null(names(files))) {
+    names(files)
+  } else {
+    cleanTrackTitle(files)
+  }
+
+  if (length(files) != length(titles)) {
+    stop("There must be as many titles as there are files.")
+  }
+
+  files_jsn <- jsonlite::toJSON(unname(files))
+  titles_jsn <- jsonlite::toJSON(titles)
 
   if (volume < 0 || volume > 1) {
     stop("Volume must be between 0 and 1")
@@ -81,9 +95,12 @@ howlerPlayer <- function(id, files, volume = 0.7, autoplay_next = TRUE, autoplay
     id = id,
     class = "howler-player",
     `data-audio-files` = files_jsn,
+    `data-track-titles` = titles_jsn,
     `data-autoplay-next-track` = autoplay_next,
     `data-autoloop` = autoplay_loop,
     `data-volume` = volume,
     `data-seek-rate` = seek_ping_rate
   )
 }
+
+

@@ -17,7 +17,8 @@ howlerPlayer(
 \item{id}{HTML id tag to be given to the howler player element}
 
 \item{files}{Files that will be used in the player. This can either be a single vector, or a list where different
-formats of the same file are kept in each element of the list}
+formats of the same file are kept in each element of the list. If named, the names are used as track titles. Otherwise,
+the track titles will be derived from the filenames.}
 
 \item{volume}{How loud the player should start off at. Defaults to 0.7 (70\%). If \code{\link{howlerVolumeSlider}} is
 included, then this will be overridden by the value used there.}

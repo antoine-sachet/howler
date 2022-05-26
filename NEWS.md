@@ -2,6 +2,8 @@
 
 * Fix bug preventing track URLs with query parameters from playing. (#4, @antoine-sachet)
 
+* Track titles can now be provided in `howlerPlayer` as the names of the `files` argument.
+  If `files` is unnamed, the behaviour stays the same (with better handling of edge cases).
 
 # howler 0.1.0
 

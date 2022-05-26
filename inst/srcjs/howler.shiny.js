@@ -12,6 +12,7 @@ var Howler = function(el) {
 
   this.seekRate = el.dataset.seekRate;
   this.playlist = JSON.parse(el.dataset.audioFiles);
+  this.titles = JSON.parse(el.dataset.trackTitles);
   this.autoContinue = el.dataset.autocontinue === "TRUE";
   this.autoLoop = el.dataset.autoloop === "TRUE";
   this.autoPlayNext = true;
@@ -20,6 +21,8 @@ var Howler = function(el) {
 
   this.createHowl = function() {
     var track = self.playlist[self.index];
+    var title = self.titles[self.index];
+
     return new Howl({
       src: track,
       format: self.getTrackFormat(track),
@@ -30,7 +33,7 @@ var Howler = function(el) {
 
         var current_track_tag  = document.getElementById(`${self.id}_current_track`);
         if (current_track_tag) {
-          current_track_tag.innerHTML = self.cleanTrackTitle(track);
+          current_track_tag.innerHTML = title
         }
 
         Shiny.setInputValue(`${self.id}_duration`, self.player.duration());
@@ -144,10 +147,6 @@ var Howler = function(el) {
 
   this.seekTrack = function(time) {
     self.player.seek(time);
-  };
-
-  this.cleanTrackTitle = function(track) {
-    return track.replace(/(.*\/)(.*)(\.\w+$)/, "$2");
   };
 
   this.player = this.createHowl();
