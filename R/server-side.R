@@ -46,11 +46,13 @@ changeTrack <- function(session, id, file) {
 }
 
 #' @param play_track Logical, should the new track be played on addition?
+#' @param title Track title or `NULL` (default) to use the filename as title.
 #'
 #' @rdname howlerServer
 #' @export
-addTrack <- function(session, id, file, play_track = FALSE) {
-  session$sendCustomMessage("addHowlerTrack", list(id = id, file = file, play = play_track))
+addTrack <- function(session, id, file, play_track = FALSE, title = NULL) {
+  if (is.null(title)) title <- cleanTrackTitle(file)
+  session$sendCustomMessage("addHowlerTrack", list(id = id, file = file, title = title, play = play_track))
 }
 
 #' @rdname howlerServer

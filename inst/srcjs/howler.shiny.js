@@ -270,6 +270,7 @@ Shiny.addCustomMessageHandler('addHowlerTrack', function(message) {
   var howl = howlerPlayers.filter(x => x.id === message.id)[0];
 
   howl.playlist.push(message.file)
+  howl.titles.push(message.title)
 
   if (message.play) {
     howl.index = howl.playlist.length - 1;

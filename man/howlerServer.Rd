@@ -12,7 +12,7 @@
 \usage{
 changeTrack(session, id, file)
 
-addTrack(session, id, file, play_track = FALSE)
+addTrack(session, id, file, play_track = FALSE, title = NULL)
 
 playHowl(session, id)
 
@@ -30,6 +30,8 @@ seekHowl(session, id, seek)
 \item{file}{Base name of the file to change to. If the file is not included in the player nothing will happen.}
 
 \item{play_track}{Logical, should the new track be played on addition?}
+
+\item{title}{Track title or `NULL` (default) to use the filename as title.}
 
 \item{seek}{Time (in seconds) to set the position of the track}
 }
