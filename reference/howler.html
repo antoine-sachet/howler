@@ -52,15 +52,15 @@ player, and can be run by either including UI buttons or server-side actions.</p
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">howler</span><span class="op">(</span>
-  <span class="va">tracks</span>,
-  options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,
-  track_formats <span class="op">=</span> <span class="cn">NULL</span>,
-  auto_continue <span class="op">=</span> <span class="cn">FALSE</span>,
-  auto_loop <span class="op">=</span> <span class="cn">FALSE</span>,
-  seek_ping_rate <span class="op">=</span> <span class="fl">1000</span>,
-  elementId <span class="op">=</span> <span class="cn">NULL</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">howler</span><span class="op">(</span></span>
+<span>  <span class="va">tracks</span>,</span>
+<span>  options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  track_formats <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  auto_continue <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  auto_loop <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  seek_ping_rate <span class="op">=</span> <span class="fl">1000</span>,</span>
+<span>  elementId <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -68,28 +68,45 @@ player, and can be run by either including UI buttons or server-side actions.</p
     <dl><dt>tracks</dt>
 <dd><p>A named vector of file paths to sounds. If multiple file extensions are included, then use a named
 list instead, with each list item containing each extension of the sound.</p></dd>
+
+
 <dt>options</dt>
 <dd><p>A named list of options to add to the player. For a full list of options see
 <a href="https://github.com/goldfire/howler.js" class="external-link">https://github.com/goldfire/howler.js</a></p></dd>
+
+
 <dt>track_formats</dt>
 <dd><p>An optional list of formats of the sounds. By default 'howler' will guess the format to
 play in. Must be the same length as tracks</p></dd>
+
+
 <dt>auto_continue</dt>
 <dd><p>If there are multiple files, would you like to auto play the next file after the current
 one has finished? Defaults to <code>TRUE</code></p></dd>
+
+
 <dt>auto_loop</dt>
 <dd><p>Once all files have been played, would you like to restart playing the playlist?
 Defaults to <code>FALSE</code></p></dd>
+
+
 <dt>seek_ping_rate</dt>
 <dd><p>Number of milliseconds between each update of `input${id}_seek` while playing. Default is
 set to 1000. If set to 0, then `input${id}_seek` will not exist.</p></dd>
+
+
 <dt>elementId</dt>
 <dd><p>HTML id tag to be given to the howler player element</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A shiny.tag containing all of the required options for a <code>Howl</code> JS object to be initialised in a shiny application.
-On the server side there will be up to four additional objects available as inputs:</p><dl><dt><code>{id}_playing</code></dt>
+    
+
+<p>A shiny.tag containing all of the required options for a <code>Howl</code> JS object to be initialised in a shiny application.</p>
+
+
+<p>On the server side there will be up to four additional objects available as inputs:</p><dl><dt><code>{id}_playing</code></dt>
 <dd><p>A logical value as to whether or not the <code>howler</code> is playing audio</p></dd>
 
 <dt><code>{id}_track</code></dt>
@@ -116,32 +133,32 @@ that the buttons are linked to the player.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.rstudio.com/" class="external-link">shiny</a></span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in">  <span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html" class="external-link">fluidPage</a></span><span class="op">(</span></span>
-<span class="r-in">    title <span class="op">=</span> <span class="st">"howler.js Player"</span>,</span>
-<span class="r-in">    <span class="fu">howler</span><span class="op">(</span>elementId <span class="op">=</span> <span class="st">"howler"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>sound <span class="op">=</span> <span class="st">"audio/sound.mp3"</span><span class="op">)</span><span class="op">)</span>,</span>
-<span class="r-in">    <span class="fu"><a href="howlerButton.html">howlerPlayPauseButton</a></span><span class="op">(</span><span class="st">"howler"</span><span class="op">)</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in">  <span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">  <span class="op">}</span></span>
-<span class="r-in"></span>
-<span class="r-in">  <span class="fu">runShiny</span><span class="op">(</span><span class="va">ui</span>, <span class="va">server</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="co"># Multiple file formats</span></span>
-<span class="r-in"><span class="fu">howler</span><span class="op">(</span></span>
-<span class="r-in">  elementId <span class="op">=</span> <span class="st">"howler"</span>,</span>
-<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span class="r-in">    track_1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"audio/sound.webm"</span>, <span class="st">"audio/sound.mp3"</span><span class="op">)</span>,</span>
-<span class="r-in">    track_2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"audio/sound2.webm"</span>, <span class="st">"audio/sound2.mp3"</span><span class="op">)</span>,</span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.rstudio.com/" class="external-link">shiny</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html" class="external-link">fluidPage</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    title <span class="op">=</span> <span class="st">"howler.js Player"</span>,</span></span>
+<span class="r-in"><span>    <span class="fu">howler</span><span class="op">(</span>elementId <span class="op">=</span> <span class="st">"howler"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>sound <span class="op">=</span> <span class="st">"audio/sound.mp3"</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    <span class="fu"><a href="howlerButton.html">howlerPlayPauseButton</a></span><span class="op">(</span><span class="st">"howler"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="fu">runShiny</span><span class="op">(</span><span class="va">ui</span>, <span class="va">server</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="co"># Multiple file formats</span></span></span>
+<span class="r-in"><span><span class="fu">howler</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  elementId <span class="op">=</span> <span class="st">"howler"</span>,</span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    track_1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"audio/sound.webm"</span>, <span class="st">"audio/sound.mp3"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    track_2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"audio/sound2.webm"</span>, <span class="st">"audio/sound2.mp3"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -156,7 +173,7 @@ that the buttons are linked to the player.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>
